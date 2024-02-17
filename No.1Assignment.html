@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment No. 1</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f4f4f8; 
+        }
+
+        .table-head {
+            background-color: #0c0c0c; 
+            color: #faf8f8;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <table class="table table-striped table-bordered table-hover table-sm table-responsive table-light" id="dataTable">
+            <thead class="table-head">
+                <tr>
+                    <th scope="col">UserID</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var data = JSON.parse(this.responseText);
+                renderTable(data);
+            }
+        };
+        xhttp.open("GET", "http://localhost/api.php", true);
+        xhttp.send();
+
+        function renderTable(data) {
+            var tableBody = document.getElementById('tableBody');
+            data.forEach(function(item){
+                var row = `
+                    <tr>
+                        <th>${item.userid}</th>
+                        <td>${item.username}</td>
+                        <td>${item.firstname}</td>
+                        <td>${item.lastname}</td>
+                        <td>${item.email}</td>
+                    </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+    </script>
+
+</body>
+</html>
